@@ -21,9 +21,14 @@ const AddLinkModal = ({ isOpen, onClose, onAdd }) => {
     }, [url]);
 
     const isValidUrl = (string) => {
+        if (!string) return false;
+        let testStr = string.trim();
+        if (!/^https?:\/\//i.test(testStr)) {
+            testStr = 'https://' + testStr;
+        }
         try {
-            new URL(string);
-            return true;
+            const parsed = new URL(testStr);
+            return parsed.hostname.includes('.') || parsed.hostname === 'localhost';
         } catch (_) {
             return false;
         }
@@ -87,9 +92,9 @@ const AddLinkModal = ({ isOpen, onClose, onAdd }) => {
                                     <LinkIcon className="text-gray-500" size={18} />
                                 </div>
                                 <input
-                                    type="url"
+                                    type="text"
                                     className="w-full bg-darker border border-gray-700 rounded-lg pl-10 pr-4 py-3 text-white focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition"
-                                    placeholder="https://example.com"
+                                    placeholder="example.com or https://example.com"
                                     value={url}
                                     onChange={(e) => setUrl(e.target.value)}
                                     autoFocus
