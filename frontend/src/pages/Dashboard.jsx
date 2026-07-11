@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import AuthContext from '../context/AuthContext';
-import axios from 'axios';
+import api from '../api';
 import { Plus, Search, LogOut, LayoutGrid } from 'lucide-react';
 import LinkCard from '../components/LinkCard';
 import AddLinkModal from '../components/AddLinkModal';
@@ -19,7 +19,7 @@ const Dashboard = () => {
 
     const fetchLinks = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/links');
+            const res = await api.get('/api/links');
             setLinks(res.data);
             setFilteredLinks(res.data);
         } catch (err) {
@@ -44,7 +44,7 @@ const Dashboard = () => {
         try {
             // Optimistic update or refetch?
             // POST new link
-            const res = await axios.post('http://localhost:5000/api/links', newLinkData);
+            const res = await api.post('/api/links', newLinkData);
             setLinks([res.data, ...links]);
         } catch (err) {
             console.error(err);
@@ -54,7 +54,7 @@ const Dashboard = () => {
     const handleDelete = async (id) => {
         if (!window.confirm("Are you sure you want to delete this link?")) return;
         try {
-            await axios.delete(`http://localhost:5000/api/links/${id}`);
+            await api.delete(`/api/links/${id}`);
             setLinks(links.filter(l => l._id !== id));
         } catch (err) {
             console.error(err);

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { X, Loader2, Plus, Link as LinkIcon, Image as ImageIcon } from 'lucide-react';
 
 const AddLinkModal = ({ isOpen, onClose, onAdd }) => {
@@ -33,7 +33,7 @@ const AddLinkModal = ({ isOpen, onClose, onAdd }) => {
         setLoading(true);
         setError('');
         try {
-            const res = await axios.post('http://localhost:5000/api/links/preview', { url });
+            const res = await api.post('/api/links/preview', { url });
             setPreview(res.data);
         } catch (err) {
             console.error(err);
