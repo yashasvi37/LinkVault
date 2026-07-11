@@ -53,6 +53,37 @@ router.post('/preview', auth, async (req, res) => {
             }
         }
 
+        // Fallback to favicon extraction if no og:image is found
+        if (!image) {
+            const favicon = 
+                $('link[rel="apple-touch-icon"]').attr('href') ||
+                $('link[rel="shortcut icon"]').attr('href') ||
+                $('link[rel="icon"]').attr('href') ||
+                $('link[rel="alternate icon"]').attr('href');
+            
+            if (favicon) {
+                if (/^https?:\/\//i.test(favicon)) {
+                    image = favicon;
+                } else {
+                    try {
+                        image = new URL(favicon, targetUrl).href;
+                    } catch (e) {
+                        console.error('Error resolving favicon URL:', e);
+                    }
+                }
+            }
+        }
+
+        // Final fallback: Google Favicon Service if still no image
+        if (!image) {
+            try {
+                const parsedUrl = new URL(targetUrl);
+                image = `https://www.google.com/s2/favicons?sz=128&domain=${parsedUrl.hostname}`;
+            } catch (e) {
+                console.error('Error constructing fallback favicon URL:', e);
+            }
+        }
+
         res.json({
             originalUrl: targetUrl,
             title: title.trim(),
@@ -62,12 +93,20 @@ router.post('/preview', auth, async (req, res) => {
 
     } catch (err) {
         console.error('Scraper Error:', err.message);
-        // Return fallback instead of 500 for better UX
+        // Fallback to domain and Google favicon as image on error
+        let fallbackImage = '';
+        try {
+            const parsedUrl = new URL(url.startsWith('http') ? url : 'http://' + url);
+            fallbackImage = `https://www.google.com/s2/favicons?sz=128&domain=${parsedUrl.hostname}`;
+        } catch (e) {
+            console.error('Error creating fallback image on catch block:', e);
+        }
+
         res.json({
             originalUrl: url,
             title: url,
             description: 'Could not fetch metadata',
-            image: ''
+            image: fallbackImage
         });
     }
 });
