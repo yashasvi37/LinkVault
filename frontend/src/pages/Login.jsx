@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react';
 import AuthContext from '../context/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
-import { Mail, Lock, Shield, Eye, EyeOff, LayoutGrid, CheckCircle } from 'lucide-react';
+import { Mail, Lock, Shield, Eye, EyeOff, LayoutGrid, CheckCircle, Github, Youtube, Globe, Chrome } from 'lucide-react';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -27,13 +27,63 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-darker via-slate-950 to-dark relative overflow-hidden px-4">
-            {/* Decorative Ambient Glow */}
-            <div className="absolute top-[-20%] left-[-10%] w-[500px] h-[500px] rounded-full bg-blue-500/5 blur-[120px] pointer-events-none"></div>
-            <div className="absolute bottom-[-20%] right-[-10%] w-[500px] h-[500px] rounded-full bg-indigo-500/5 blur-[120px] pointer-events-none"></div>
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-darker via-slate-950 to-dark relative overflow-hidden px-4 bg-grid-pattern">
+            {/* Decorative Ambient Glows */}
+            <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-blue-500/5 blur-[130px] pointer-events-none"></div>
+            <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-indigo-500/5 blur-[130px] pointer-events-none"></div>
+
+            {/* Floating Background Link Cards - Left Side */}
+            <div className="absolute top-[12%] left-[6%] opacity-25 hover:opacity-85 transition-opacity duration-300 pointer-events-none lg:pointer-events-auto animate-float-slow hidden xl:block z-10">
+                <div className="bg-card/45 backdrop-blur-md border border-white/10 rounded-xl p-3.5 shadow-xl flex items-center gap-3.5 transform -rotate-3 hover:scale-105 transition-transform duration-200">
+                    <div className="w-9 h-9 rounded-lg bg-zinc-900 flex items-center justify-center text-white border border-white/10">
+                        <Github className="w-5 h-5" />
+                    </div>
+                    <div>
+                        <div className="text-xs font-semibold text-white">GitHub</div>
+                        <div className="text-[10px] text-gray-500">github.com/profile</div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="absolute bottom-[16%] left-[10%] opacity-25 hover:opacity-85 transition-opacity duration-300 pointer-events-none lg:pointer-events-auto animate-float-medium hidden xl:block z-10">
+                <div className="bg-card/45 backdrop-blur-md border border-white/10 rounded-xl p-3.5 shadow-xl flex items-center gap-3.5 transform rotate-6 hover:scale-105 transition-transform duration-200">
+                    <div className="w-9 h-9 rounded-lg bg-red-950/40 border border-red-500/20 flex items-center justify-center text-red-500">
+                        <Youtube className="w-5 h-5" />
+                    </div>
+                    <div>
+                        <div className="text-xs font-semibold text-white">YouTube</div>
+                        <div className="text-[10px] text-gray-500">youtube.com/watch</div>
+                    </div>
+                </div>
+            </div>
+
+            {/* Floating Background Link Cards - Right Side */}
+            <div className="absolute top-[18%] right-[8%] opacity-25 hover:opacity-85 transition-opacity duration-300 pointer-events-none lg:pointer-events-auto animate-float-medium hidden xl:block z-10">
+                <div className="bg-card/45 backdrop-blur-md border border-white/10 rounded-xl p-3.5 shadow-xl flex items-center gap-3.5 transform rotate-3 hover:scale-105 transition-transform duration-200">
+                    <div className="w-9 h-9 rounded-lg bg-blue-950/40 border border-blue-500/20 flex items-center justify-center text-blue-400">
+                        <Chrome className="w-5 h-5" />
+                    </div>
+                    <div>
+                        <div className="text-xs font-semibold text-white">Google Chrome</div>
+                        <div className="text-[10px] text-gray-500">google.com/search</div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="absolute bottom-[20%] right-[12%] opacity-25 hover:opacity-85 transition-opacity duration-300 pointer-events-none lg:pointer-events-auto animate-float-slow hidden xl:block z-10">
+                <div className="bg-card/45 backdrop-blur-md border border-white/10 rounded-xl p-3.5 shadow-xl flex items-center gap-3.5 transform -rotate-6 hover:scale-105 transition-transform duration-200">
+                    <div className="w-9 h-9 rounded-lg bg-emerald-950/40 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
+                        <Globe className="w-5 h-5" />
+                    </div>
+                    <div>
+                        <div className="text-xs font-semibold text-white">Vercel Deploy</div>
+                        <div className="text-[10px] text-gray-500">vercel.com/dashboard</div>
+                    </div>
+                </div>
+            </div>
 
             {/* Split Screen Container */}
-            <div className="w-full max-w-4xl bg-card/40 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden grid md:grid-cols-2 min-h-[550px]">
+            <div className="w-full max-w-4xl bg-card/30 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden grid md:grid-cols-2 min-h-[550px] relative z-20">
                 
                 {/* Left side: Branding / Marketing */}
                 <div className="hidden md:flex flex-col justify-between p-12 bg-gradient-to-br from-primary/5 to-indigo-950/20 border-r border-white/5 relative">
